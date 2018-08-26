@@ -1,0 +1,113 @@
+---
+title: "Download and preprocess the Tabula Muris 10x data"
+author: "Charlotte Soneson"
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 100)
+```
+
+## Download raw data from figshare
+
+Raw data is downloaded from [https://figshare.com/articles/Single-cell_RNA-seq_data_from_microfluidic_emulsion_v2_/5968960](figshare). This page provides gene-count files and metadata files for single cells from different organs of mice processed on the 10X Genomics Platform. The counts are given using the .mtx file output by the CellRanger program, with one folder per run.
+
+According to the figshare record, the Tabula Muris consortium provides data for 422,803 droplets, 55,656 of which passed a QC cutoff of 500 genes and 1000 UMI. Cell annotations using the Cell Ontology controlled vocabulary are in a separate csv.
+
+```{r, eval = FALSE}
+system("wget https://ndownloader.figshare.com/files/10700167")
+system("unzip 10700167")
+system("wget https://ndownloader.figshare.com/files/10700161")
+system("mv 10700161 droplet_metadata.csv")
+system("wget https://ndownloader.figshare.com/files/10881902")
+system("mv 10881902 droplet_annotation.csv")
+```
+
+## Read 10x counts using `DropletUtils`
+
+```{r}
+suppressPackageStartupMessages({
+    library(DropletUtils)
+    library(dplyr)
+})
+
+## List all files
+sample_list <- list.files("droplet", full.names = TRUE)
+
+## Read data and generate SingleCellExperiment object
+droplet <- DropletUtils::read10xCounts(samples = sample_list)
+droplet
+```
+
+## Add annotations
+
+```{r}
+## Simplify Sample and Barcode and set column names
+droplet$Sample <- gsub("droplet/", "", droplet$Sample)
+droplet$Barcode <- gsub("-1$", "", droplet$Barcode)
+colnames(droplet) <- paste0(droplet$Sample, "-", droplet$Barcode)
+droplet$channel <- sapply(strsplit(droplet$Sample, "-"), .subset, 2)
+droplet$tissue <- sapply(strsplit(droplet$Sample, "-"), .subset, 1)
+
+## Add subtissue, mouse ID and sex
+metadata <- read.csv("droplet_metadata.csv", stringsAsFactors = FALSE)
+colData(droplet) <- as.data.frame(colData(droplet)) %>%
+    dplyr::left_join(metadata, by = c("channel", "tissue")) %>%
+    DataFrame()
+
+annotation <- read.csv("droplet_annotation.csv", stringsAsFactors = FALSE)
+colData(droplet) <- as.data.frame(colData(droplet)) %>%
+    dplyr::mutate(cell = paste0(channel, "_", Barcode)) %>%
+    dplyr::left_join(annotation, by = c("cell", "channel", "mouse.id", 
+                                        "mouse.sex", "tissue", "subtissue")) %>%
+    dplyr::rename(mouse_id = mouse.id, 
+                  mouse_sex = mouse.sex,
+                  original_cluster_ids = cluster.ids,
+                  subsetA_cluster_ids = subsetA_cluster.ids,
+                  subsetB_cluster_ids = subsetB_cluster.ids) %>%
+    DataFrame()
+```
+
+## Summarize the number of UMI counts and detected genes per sample
+
+```{r}
+## Number of annotated cells
+sum(!is.na(droplet$cell_ontology_class))
+
+## Total UMI counts per cell
+cell_counts <- Matrix::colSums(assay(droplet))
+
+## Total number of detected genes per cell
+gene_counts <- Matrix::colSums(assay(droplet) > 0)
+
+## Number of cells passing certain thresholds
+## Threshold set in figshare record - at least 1,000 UMI counts and 500 genes
+sum(cell_counts > 1000 & gene_counts > 500)
+
+## Threshold set in https://github.com/czbiohub/tabula-muris-vignettes/blob/master/data/Data_Formatting.Rmd
+sum(cell_counts > 100)
+
+## Tabulate min/max number of UMI/gene counts per tissue
+df <- data.frame(Sample = colData(droplet)$Sample, UMICounts = cell_counts,
+                 GeneCounts = gene_counts, stringsAsFactors = FALSE)
+as.data.frame(df %>% dplyr::group_by(Sample) %>%
+                  dplyr::summarize(minUMICounts = min(UMICounts),
+                                   maxUMICounts = max(UMICounts),
+                                   minGeneCounts = min(GeneCounts),
+                                   maxGeneCounts = max(GeneCounts)))
+```
+
+## Save SingleCellExperiment object
+
+```{r}
+saveRDS(droplet, file = "TabulaMurisDroplet.rds")
+```
+
+## Session info
+
+```{r}
+sessionInfo()
+```
+
