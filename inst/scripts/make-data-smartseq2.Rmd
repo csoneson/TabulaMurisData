@@ -1,0 +1,80 @@
+---
+title: "Download and preprocess the Tabula Muris SmartSeq2 data"
+author: "Charlotte Soneson"
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 100)
+```
+
+## Download data
+
+The count table was downloaded from [https://s3.amazonaws.com/czbiohub-tabula-muris/TM_facs_mat.rds](https://s3.amazonaws.com/czbiohub-tabula-muris/TM_facs_mat.rds), following instructions on [https://github.com/czbiohub/tabula-muris-vignettes/tree/master/data](https://github.com/czbiohub/tabula-muris-vignettes/tree/master/data) (accessed August 26, 2018).
+
+The metadata was obtained from [https://github.com/czbiohub/tabula-muris-vignettes/tree/master/data](https://github.com/czbiohub/tabula-muris-vignettes/tree/master/data) (accessed August 26, 2018).
+
+```{r}
+suppressPackageStartupMessages({
+    library(Matrix)
+    library(SingleCellExperiment)
+    library(readr)
+    library(dplyr)
+})
+
+counts <- readRDS("TM_facs_mat.rds")
+metadata <- readr::read_csv("TM_facs_metadata.csv")
+```
+
+## Generate `SingleCellExperiment` object
+
+```{r}
+stopifnot(all(colnames(counts) == metadata$cell))
+
+smartseq2 <- SingleCellExperiment(
+    assay = list(counts = counts),
+    colData = DataFrame(metadata %>% dplyr::rename(mouse_id = mouse.id,
+                                                   mouse_sex = mouse.sex,
+                                                   plate_barcode = plate.barcode,
+                                                   FACS_selection = FACS.selection)),
+    rowData = DataFrame(ID = rownames(counts),
+                        Symbol = rownames(counts))
+)
+```
+
+## Exclude ERCCs
+
+```{r}
+smartseq2 <- smartseq2[grep("^ERCC-", rownames(smartseq2), invert = TRUE), ]
+dim(smartseq2)
+```
+
+## Harmonize annotations with 10x data
+
+```{r}
+smartseq2$mouse_id <- sapply(smartseq2$mouse_id, function(i) {
+    tmp <- lapply(strsplit(i, "/")[[1]], function(w) {
+        strsplit(w, "_")[[1]]
+    })
+    paste(unlist(sapply(c(1, 3, 2), function(i) {
+        paste(unique(unlist(lapply(tmp, function(x) x[i]))), collapse = "/")
+    })), collapse = "-")
+})
+```
+
+
+## Save `SingleCellExperiment` object
+
+```{r}
+smartseq2
+head(colData(smartseq2))
+saveRDS(smartseq2, file = "TabulaMurisSmartSeq2.rds")
+```
+
+## Session info
+
+```{r}
+sessionInfo()
+```
