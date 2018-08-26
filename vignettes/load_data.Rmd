@@ -1,0 +1,39 @@
+---
+title: "Load data"
+author: "Charlotte Soneson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Load Tabula Muris data
+
+```{r}
+suppressPackageStartupMessages({
+    library(ExperimentHub)
+    library(TabulaMurisData)
+})
+
+eh <- ExperimentHub()
+query(eh, "TabulaMuris")
+
+droplet <- TabulaMurisDroplet()
+smartseq2 <- TabulaMurisSmartseq2()
+```
+
+## Session info
+
+```{r}
+sessionInfo()
+```
+
