@@ -7,7 +7,7 @@ Maintainer: Charlotte Soneson <charlottesoneson@gmail.com>
 Description: Provides access to processed 10x (droplet) and SmartSeq2 
     (on FACS-sorted cells) single-cell RNA-seq data from the Tabula Muris 
     consortium (http://tabula-muris.ds.czbiohub.org/)
-License: GPL (>=2)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 biocViews: SingleCellData
