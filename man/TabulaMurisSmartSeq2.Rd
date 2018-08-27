@@ -11,7 +11,8 @@
     SmartSeq2 data from the Tabula Muris Consortium
 }
 \details{
-    Read count data from the Tabula Muris Consortium.
+    Read counts from the SmartSeq2 (on FACS-sorted cells) single-cell RNA-seq
+    data collected by the Tabula Muris Consortium.
 }
 
 \usage{
@@ -22,6 +23,9 @@
 }
 \format{SingleCellExperiment}
 \value{Returns a \code{SingleCellExperiment} object.}
+\author{
+    Charlotte Soneson
+}
 \references{
     The Tabula Muris Consortium:
         Single-cell transcriptomic characterization of 20 organs and tissues from

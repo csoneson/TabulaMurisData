@@ -28,7 +28,7 @@ eh <- ExperimentHub()
 query(eh, "TabulaMuris")
 
 droplet <- TabulaMurisDroplet()
-smartseq2 <- TabulaMurisSmartseq2()
+smartseq2 <- TabulaMurisSmartSeq2()
 ```
 
 ## Session info

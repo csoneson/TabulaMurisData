@@ -8,10 +8,11 @@
     \item{metadata}{Logical, whether only metadata should be returned}
 }
 \description{
-    Droplet (10x) data from the Tabula Muris Consortium
+    10x data from the Tabula Muris Consortium
 }
 \details{
-    UMI count data from the Tabula Muris Consortium.
+    UMI counts from the 10x (droplet) single-cell RNA-seq data collected by the
+    Tabula Muris Consortium.
 }
 
 \usage{
@@ -22,6 +23,9 @@
 }
 \format{SingleCellExperiment}
 \value{Returns a \code{SingleCellExperiment} object.}
+\author{
+    Charlotte Soneson
+}
 \references{
     The Tabula Muris Consortium:
         Single-cell transcriptomic characterization of 20 organs and tissues from
