@@ -10,10 +10,10 @@ Encoding: UTF-8
 LazyData: true
 biocViews: SingleCellData
 Depends: R (>= 3.5)
-Imports: ExperimentHub
+Imports: ExperimentHub,
+    utils
 Suggests: knitr,
 	rmarkdown
 	BiocStyle
 	SingleCellExperiment
 VignetteBuilder: knitr
-
