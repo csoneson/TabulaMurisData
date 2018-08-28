@@ -15,7 +15,7 @@ Depends: R (>= 3.5)
 Imports: ExperimentHub,
     utils
 Suggests: knitr,
-	rmarkdown
-	BiocStyle
+	rmarkdown,
+	BiocStyle,
 	SingleCellExperiment
 VignetteBuilder: knitr
