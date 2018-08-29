@@ -1,12 +1,13 @@
 ---
-title: "Load data"
+title: "Tabula Muris data"
 author: "Charlotte Soneson"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+package: TabulaMurisData
+output: 
+    BiocStyle::html_document
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{Tabula Muris data}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
@@ -16,22 +17,74 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Load Tabula Muris data
+# Load Tabula Muris data
+
+The `TabulaMurisData` data package contains the 10x and SmartSeq2 single-cell
+RNA-seq data sets from [the Tabula Muris
+Consortium](http://tabula-muris.ds.czbiohub.org/). The contents of the package
+can be seen by querying the ExperimentHub for the package name.
 
 ```{r}
 suppressPackageStartupMessages({
     library(ExperimentHub)
+    library(SingleCellExperiment)
     library(TabulaMurisData)
 })
 
 eh <- ExperimentHub()
-query(eh, "TabulaMuris")
-
-droplet <- TabulaMurisDroplet()
-smartseq2 <- TabulaMurisSmartSeq2()
+query(eh, "TabulaMurisData")
 ```
 
-## Session info
+The individual data sets can be accessed using either their ExperimentHub
+accession number, or the convenience functions provided in this package.
+
+```{r}
+droplet <- eh[["EH1617"]]
+droplet
+droplet <- TabulaMurisDroplet()
+droplet
+
+smartseq2 <- eh[["EH1618"]]
+smartseq2
+smartseq2 <- TabulaMurisSmartSeq2()
+smartseq2
+```
+
+# Explore data with `iSEE`
+
+Each data set is provided in the form of a `SingleCellExperiment` object. To
+gain further insights into the contents of the data sets, they can be explored
+using, e.g., the `r Biocpkg("iSEE")` package. For the purposes of this vignette,
+we first subsample a small subset of the cells in the SmartSeq2 data set, to
+reduce the run time.
+
+```{r}
+set.seed(1234)
+se <- smartseq2[, sample(seq_len(ncol(smartseq2)), 250, replace = FALSE)]
+se
+```
+
+Next, we calculate size factors and normalize the data using the 
+`r Biocpkg("scran")` and `r Biocpkg("scater")` packages, and  perform dimension
+reduction using PCA and t-SNE.
+
+```{r}
+se <- scran::computeSumFactors(se)
+se <- scater::normalize(se)
+se <- scater::runPCA(se)
+se <- scater::runTSNE(se)
+```
+
+Finally, we call `iSEE` with the subsampled `SingleCellExperiment` object. This
+opens up an instance of `iSEE` containing the provided data set.
+
+```{r, eval=FALSE}
+if (require(iSEE)) {
+    iSEE(se)
+}
+```
+
+# Session info
 
 ```{r}
 sessionInfo()

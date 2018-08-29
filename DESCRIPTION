@@ -17,5 +17,8 @@ Imports: ExperimentHub,
 Suggests: knitr,
 	rmarkdown,
 	BiocStyle,
-	SingleCellExperiment
+	SingleCellExperiment,
+    scran,
+    scater
 VignetteBuilder: knitr
+RoxygenNote: 6.1.0
