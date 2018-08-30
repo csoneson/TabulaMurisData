@@ -12,8 +12,8 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 ```
 
@@ -36,14 +36,10 @@ query(eh, "TabulaMurisData")
 ```
 
 The individual data sets can be accessed using either their ExperimentHub
-accession number, or the convenience functions provided in this package.
+accession number, or the convenience functions provided in this package. For
+example, for the SmartSeq2 data:
 
 ```{r}
-droplet <- eh[["EH1617"]]
-droplet
-droplet <- TabulaMurisDroplet()
-droplet
-
 smartseq2 <- eh[["EH1618"]]
 smartseq2
 smartseq2 <- TabulaMurisSmartSeq2()
