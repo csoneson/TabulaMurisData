@@ -3,7 +3,7 @@ context("objects are correct")
 test_that("SmartSeq2 object is correct", {
   smartseq2 <- TabulaMurisSmartSeq2()
   expect_is(smartseq2, "SingleCellExperiment")
-  expect_equal(nrow(smartseq2), 23341)
+  expect_equal(nrow(smartseq2), 23433)
   expect_equal(ncol(smartseq2), 53760)
   expect_equal(colnames(rowData(smartseq2)), c("ID", "Symbol"))
   expect_equal(assayNames(smartseq2), "counts")
