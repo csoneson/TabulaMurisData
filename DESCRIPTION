@@ -15,9 +15,9 @@ Depends: R (>= 3.5)
 Imports: ExperimentHub,
     utils
 Suggests: knitr,
-	rmarkdown,
-	BiocStyle,
-	SingleCellExperiment,
+    rmarkdown,
+    BiocStyle,
+    SingleCellExperiment,
     scran,
     scater,
     testthat
