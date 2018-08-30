@@ -44,11 +44,13 @@ smartseq2 <- SingleCellExperiment(
 )
 ```
 
-## Exclude ERCCs
+## Mark ERCCs
 
 ```{r}
-smartseq2 <- smartseq2[grep("^ERCC-", rownames(smartseq2), invert = TRUE), ]
+SingleCellExperiment::isSpike(smartseq2, "ERCC") <- 
+    grep("^ERCC-", rownames(smartseq2))
 dim(smartseq2)
+table(isSpike(smartseq2, "ERCC"))
 ```
 
 ## Harmonize annotations with 10x data

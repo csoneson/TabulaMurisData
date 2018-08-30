@@ -7,6 +7,7 @@ test_that("SmartSeq2 object is correct", {
   expect_equal(ncol(smartseq2), 53760)
   expect_equal(colnames(rowData(smartseq2)), c("ID", "Symbol"))
   expect_equal(assayNames(smartseq2), "counts")
+  expect_equal(length(grep("^ERCC-", rownames(smartseq2))), 92)
 })
 
 test_that("Droplet object is correct", {
