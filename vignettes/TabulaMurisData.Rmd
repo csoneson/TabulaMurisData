@@ -19,10 +19,11 @@ knitr::opts_chunk$set(
 
 # Load Tabula Muris data
 
-The `TabulaMurisData` data package contains the 10x and SmartSeq2 single-cell
-RNA-seq data sets from [the Tabula Muris
-Consortium](http://tabula-muris.ds.czbiohub.org/). The contents of the package
-can be seen by querying the ExperimentHub for the package name.
+The `TabulaMurisData` data package provides access to the 10x and SmartSeq2
+single-cell RNA-seq data sets from 
+[the Tabula Muris Consortium](http://tabula-muris.ds.czbiohub.org/). 
+The contents of the package can be seen by querying the ExperimentHub for the
+package name.
 
 ```{r}
 suppressPackageStartupMessages({
@@ -37,13 +38,13 @@ query(eh, "TabulaMurisData")
 
 The individual data sets can be accessed using either their ExperimentHub
 accession number, or the convenience functions provided in this package. For
-example, for the SmartSeq2 data:
+example, for the 10x data:
 
 ```{r}
-smartseq2 <- eh[["EH1618"]]
-smartseq2
-smartseq2 <- TabulaMurisSmartSeq2()
-smartseq2
+droplet <- eh[["EH1617"]]
+droplet
+droplet <- TabulaMurisDroplet()
+droplet
 ```
 
 # Explore data with `iSEE`
@@ -51,12 +52,12 @@ smartseq2
 Each data set is provided in the form of a `SingleCellExperiment` object. To
 gain further insights into the contents of the data sets, they can be explored
 using, e.g., the `r Biocpkg("iSEE")` package. For the purposes of this vignette,
-we first subsample a small subset of the cells in the SmartSeq2 data set, to
-reduce the run time.
+we first subsample a small subset of the cells in the 10x data set, to reduce
+the run time.
 
 ```{r}
 set.seed(1234)
-se <- smartseq2[, sample(seq_len(ncol(smartseq2)), 250, replace = FALSE)]
+se <- droplet[, sample(seq_len(ncol(droplet)), 250, replace = FALSE)]
 se
 ```
 
@@ -66,7 +67,6 @@ reduction using PCA and t-SNE.
 
 ```{r}
 se <- scran::computeSumFactors(se)
-se <- scran::computeSpikeFactors(se, general.use = FALSE)
 se <- scater::normalize(se)
 se <- scater::runPCA(se)
 se <- scater::runTSNE(se)

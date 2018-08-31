@@ -56,14 +56,14 @@ table(isSpike(smartseq2, "ERCC"))
 ## Harmonize annotations with 10x data
 
 ```{r}
-smartseq2$mouse_id <- sapply(smartseq2$mouse_id, function(i) {
+smartseq2$mouse_id <- vapply(smartseq2$mouse_id, function(i) {
     tmp <- lapply(strsplit(i, "/")[[1]], function(w) {
         strsplit(w, "_")[[1]]
     })
-    paste(unlist(sapply(c(1, 3, 2), function(j) {
+    paste(unlist(vapply(c(1, 3, 2), function(j) {
         paste(unique(unlist(lapply(tmp, function(x) x[j]))), collapse = "/")
-    })), collapse = "-")
-})
+    }, "")), collapse = "-")
+}, "")
 ```
 
 ## Save `SingleCellExperiment` object
