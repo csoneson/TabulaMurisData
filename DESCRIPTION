@@ -1,7 +1,7 @@
 Package: TabulaMurisData
 Type: Package
 Title: 10x And SmartSeq2 Data From The Tabula Muris Consortium
-Version: 0.99.0
+Version: 0.99.1
 Author: Charlotte Soneson
 Maintainer: Charlotte Soneson <charlottesoneson@gmail.com>
 Description: Access to processed 10x (droplet) and SmartSeq2 
