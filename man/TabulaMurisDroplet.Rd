@@ -8,13 +8,10 @@
     \item{metadata}{Logical, whether only metadata should be returned}
 }
 \description{
-    10x data from the Tabula Muris Consortium
-}
-\details{
     UMI counts from the 10x (droplet) single-cell RNA-seq data collected by the
-    Tabula Muris Consortium.
+    Tabula Muris Consortium. The object contains counts for 23,341 genes in
+    70,118 cells.
 }
-
 \usage{
     TabulaMurisDroplet(metadata = FALSE)
 }

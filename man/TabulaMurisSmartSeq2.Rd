@@ -8,13 +8,10 @@
     \item{metadata}{Logical, whether only metadata should be returned}
 }
 \description{
-    SmartSeq2 data from the Tabula Muris Consortium
-}
-\details{
     Read counts from the SmartSeq2 (on FACS-sorted cells) single-cell RNA-seq
-    data collected by the Tabula Muris Consortium.
+    data collected by the Tabula Muris Consortium. The object contains counts
+    for 23,433 features (23,341 genes and 92 ERCC spike-ins) in 53,760 cells.
 }
-
 \usage{
     TabulaMurisSmartSeq2(metadata = FALSE)
 }
