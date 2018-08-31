@@ -4,9 +4,9 @@ Title: 10x And SmartSeq2 Data From The Tabula Muris Consortium
 Version: 0.99.0
 Author: Charlotte Soneson
 Maintainer: Charlotte Soneson <charlottesoneson@gmail.com>
-Description: Provides access to processed 10x (droplet) and SmartSeq2 
+Description: Access to processed 10x (droplet) and SmartSeq2 
     (on FACS-sorted cells) single-cell RNA-seq data from the Tabula Muris 
-    consortium (http://tabula-muris.ds.czbiohub.org/)
+    consortium (http://tabula-muris.ds.czbiohub.org/).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

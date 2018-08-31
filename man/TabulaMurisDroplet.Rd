@@ -1,6 +1,6 @@
 \name{TabulaMurisDroplet}
 \docType{data}
-
+\alias{TabulaMurisDroplet}
 \title{
     Tabula Muris 10x data
 }

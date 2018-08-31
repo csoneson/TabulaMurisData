@@ -1,6 +1,6 @@
 \name{TabulaMurisSmartSeq2}
 \docType{data}
-
+\alias{TabulaMurisSmartSeq2}
 \title{
     Tabula Muris SmartSeq2 data
 }
