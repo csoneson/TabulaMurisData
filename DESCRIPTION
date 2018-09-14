@@ -1,7 +1,7 @@
 Package: TabulaMurisData
 Type: Package
 Title: 10x And SmartSeq2 Data From The Tabula Muris Consortium
-Version: 0.99.1
+Version: 0.99.2
 Author: Charlotte Soneson
 Maintainer: Charlotte Soneson <charlottesoneson@gmail.com>
 Description: Access to processed 10x (droplet) and SmartSeq2 
@@ -20,6 +20,7 @@ Suggests: knitr,
     SingleCellExperiment,
     scran,
     scater,
+    iSEE,
     testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
