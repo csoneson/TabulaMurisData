@@ -24,10 +24,8 @@
     Charlotte Soneson
 }
 \references{
-    The Tabula Muris Consortium, Stephen R. Quake, Tony Wyss-Coray,
-    Spyros Darmanis:
-    Single-cell transcriptomic characterization of 20 organs and tissues from
-    individual mice creates a \emph{Tabula Muris}.
-    bioRxiv doi:10.1101/237446 (2017).
+    The Tabula Muris Consortium:
+    Single-cell transcriptomics of 20 mouse organs creates a \emph{Tabula Muris}.
+    Nature doi:10.1038/s41586-018-0590-4 (2018).
 }
 \keyword{datasets}
