@@ -4,7 +4,7 @@ R/[ExperimentHub](https://bioconductor.org/packages/release/bioc/html/Experiment
 
 If you use the data, please cite the original [publication](https://www.nature.com/articles/s41586-018-0590-4): 
 
-- The Tabula Muris Consortium: Single-cell transcriptomics of 20 mouse organs creates a \emph{Tabula Muris}. Nature doi:10.1038/s41586-018-0590-4 (2018).
+- The Tabula Muris Consortium: Single-cell transcriptomics of 20 mouse organs creates a _Tabula Muris_. Nature doi:10.1038/s41586-018-0590-4 (2018).
 
 
 Processed data files and metadata were downloaded from the links provided in [this GitHub repository](https://github.com/czbiohub/tabula-muris-vignettes/tree/master/data) on August 26, 2018:
