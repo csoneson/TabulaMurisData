@@ -67,7 +67,7 @@ reduction using PCA and t-SNE.
 
 ```{r}
 se <- scran::computeSumFactors(se)
-se <- scater::normalize(se)
+se <- scater::logNormCounts(se)
 se <- scater::runPCA(se)
 se <- scater::runTSNE(se)
 ```
