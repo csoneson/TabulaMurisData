@@ -1,7 +1,7 @@
 Package: TabulaMurisData
 Type: Package
 Title: 10x And SmartSeq2 Data From The Tabula Muris Consortium
-Version: 1.31.0
+Version: 1.31.1
 Authors@R: c(person("Charlotte", "Soneson", role = c("aut", "cre"), 
     email = "charlottesoneson@gmail.com", comment = c(ORCID = "0000-0003-3833-2169")))
 Description: Access to processed 10x (droplet) and SmartSeq2 
@@ -14,13 +14,15 @@ biocViews: SingleCellData, ExperimentData, RNASeqData
 Depends: R (>= 3.5)
 Imports: ExperimentHub,
     utils
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown,
     BiocStyle,
     SingleCellExperiment,
     scran,
     scater,
     iSEE,
-    testthat
+    testthat,
+    scrapper
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+Config/roxygen2/version: 8.0.0

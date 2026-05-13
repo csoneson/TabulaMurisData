@@ -62,12 +62,12 @@ se
 ```
 
 Next, we calculate size factors and normalize the data using the 
-`r Biocpkg("scran")` and `r Biocpkg("scater")` packages, and  perform dimension
-reduction using PCA and t-SNE.
+`r Biocpkg("scran")`, `r Biocpkg("scrapper")` and `r Biocpkg("scater")` 
+packages, and  perform dimension reduction using PCA and t-SNE.
 
 ```{r}
 se <- scran::computeSumFactors(se)
-se <- scater::logNormCounts(se)
+se <- scrapper::normalizeRnaCounts.se(se)
 se <- scater::runPCA(se)
 se <- scater::runTSNE(se)
 ```
